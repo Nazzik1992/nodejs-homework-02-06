@@ -1,20 +1,20 @@
-const { HttpError } = require("../utils");
-const contactsService = require("../models/contacts");
+
 const {ctrlWrapper} = require("../middelwares")
+const {Contact} = require("../models/contact");
 
 
 
 
 const getAllContacts = async (req, res, next) => {
    
-      const result = await contactsService.listContacts();
+      const result = await Contact.find();
       res.json(result);
     } 
 
   const getContactById = async (req, res, next) => {
     
       const { id } = req.params;
-      const result = await contactsService.getContactById(id);
+      const result = await Contact.findById(id);
       if (!result) {
         res.status(404).json({ message: "Not found" });
       }
@@ -25,14 +25,14 @@ const getAllContacts = async (req, res, next) => {
   const addContact = async (req, res, next) => {
     
       
-      const result = await contactsService.addContact(req.body);
+      const result = await Contact.create(req.body);
       res.status(201).json(result);
     } 
 
   const deleteContactById = async (req, res, next) => {
     
       const { id } = req.params;
-      const result = await contactsService.removeContact(id);
+      const result = await Contact.findByIdAndRemove(id);
       if (!result) {
         res.status(404).json({ message: "Not found" });
       }
@@ -45,9 +45,20 @@ const getAllContacts = async (req, res, next) => {
     
      
       const { id } = req.params;
-      const result = await contactsService.updateContactById(id, req.body);
+      const result = await Contact.findByIdAndUpdate(id, req.body, {new: true});
       if (!result) {
         res.status(400).json({ message: "Not found" });
+      }
+      res.json(result);
+    } 
+
+    const updateFavorite = async (req, res, next) => {
+    
+     
+      const { id } = req.params;
+      const result = await Contact.findByIdAndUpdate(id, req.body, {new: true});
+      if (!result) {
+        res.status(404).json({ message: "missing field favorite" });
       }
       res.json(result);
     } 
@@ -57,6 +68,7 @@ const getAllContacts = async (req, res, next) => {
     getContactById:ctrlWrapper(getContactById),
     addContact:ctrlWrapper(addContact),
     deleteContactById:ctrlWrapper(deleteContactById),
-    updateContactById:ctrlWrapper(updateContactById)
+    updateContactById:ctrlWrapper(updateContactById),
+    updateFavorite:ctrlWrapper(updateFavorite)
 
   }
