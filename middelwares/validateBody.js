@@ -7,7 +7,7 @@ const validateBody = schema => {
       if (req.method === 'PATCH') {
         res.status(400).json({ message: 'missing field favorite'});
       }
-      res.status(400);
+      res.status(400).json({ message: 'missing field'});
     }
     const { error } = schema.validate(req.body);
     if (error) {
