@@ -1,4 +1,3 @@
-const { HttpError } = require("../utils");
 
 const validateBody = schema => {
   const fn = (req, res, next) => {

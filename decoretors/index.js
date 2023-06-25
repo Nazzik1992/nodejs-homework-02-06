@@ -1,6 +1,6 @@
 const ctrlWrapper = require("./ctrlWrapper");
 const validateBody = require("./validateBody");
-const isValidId = require("./isValidId")
+const isValidId = require("../middlewares/isValidId")
 
 
 module.exports = {

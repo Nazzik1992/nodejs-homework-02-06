@@ -1,5 +1,5 @@
 
-const {ctrlWrapper} = require("../middelwares")
+const {ctrlWrapper} = require("../decoretors")
 const {Contact} = require("../models/contact");
 
 
