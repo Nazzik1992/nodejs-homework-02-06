@@ -1,4 +1,4 @@
-const HttpError = require("./HttpErrors");
+const HttpError = require("../helpers/HttpErrors");
 const handleMongooseError = require("./handleMongooseError")
 
 module.exports = {
