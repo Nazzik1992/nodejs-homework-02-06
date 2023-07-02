@@ -2,8 +2,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { User } = require("../models/user");
-
-const { HttpError } = require("../helpers");
 const { ctrlWrapper } = require("../decoretors");
 
 const { SECRET_KEY } = process.env;
@@ -34,7 +32,7 @@ const login = async (req, res) => {
   }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
-    res.status(401);
+    res.status(401).json({ message: 'Email or password is wrong'});
   }
   const {_id: id, subscription} = user;
   const payload = {
@@ -47,11 +45,10 @@ const login = async (req, res) => {
 };
 
 const getCurrent = async(req, res)=> {
-  const {email, password, subscription} = req.user;
+  const {email, subscription} = req.user;
 
   res.json({
     email,
-    password,
     subscription
       
   })
