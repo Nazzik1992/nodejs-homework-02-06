@@ -11,8 +11,11 @@ const loginSchema = Joi.object({
   password: Joi.string().required(),
   email: Joi.string().pattern(emailRegexp).required(),
 });
+const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+});
 
-const schemas = { registerSchema, loginSchema };
+const schemas = { registerSchema, loginSchema, emailSchema,};
 
 module.exports = {
   schemas,
