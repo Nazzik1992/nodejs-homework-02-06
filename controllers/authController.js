@@ -52,14 +52,14 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    res.status(401).json({ message: 'Email or password is wrong'});
+    throw HttpError(401, 'Email or password is wrong');
   }
   if (!user.verify) {
-    res.status(401).json({ message: 'Email, not verified'});
+    throw HttpError(401, 'Email, not verified');
   }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
-    res.status(401).json({ message: 'Email or password is wrong'});
+    throw HttpError(401, 'Email or password is wrong');
   }
   const {_id: id, subscription} = user;
   const payload = {
